@@ -1,5 +1,5 @@
 ### 现象
-对 HBase 进行读写的 java client 端的 读操作 和 写操作 耗时达几十秒。同时有 8 个线程，4 个线程会进行读和写，另外 4 个线程只有读操作，每个线程一次的数据量是 3MB 左右。
+使用的是微软 HDInsight。对 HBase 进行读写的 java client 端的 读操作 和 写操作 耗时达几十秒。同时有 8 个线程，4 个线程会进行读和写，另外 4 个线程只有读操作，每个线程一次的数据量是 3MB 左右。
 
 ### 寻根究底
 
@@ -12,7 +12,7 @@
 
 #### 使用 java profile 工具探查“慢”操作
 
-选择使用 arthas 这个工具，按照官方文档（https://alibaba.github.io/arthas/index.html）安装到 regionserver 上，并启动监控 regionserver 进程。
+选择使用 arthas 这个工具，按照官方文档（https://alibaba.github.io/arthas/index.html ）安装到 regionserver 上，并启动监控 regionserver 进程。
 
 ##### 监控第一步
 
@@ -22,4 +22,6 @@
 
 执行`trace org.apache.hadoop.hbase.regionserver.RSRpcServices doNonAtomicRegionMutation`
 
-未完待续
+##### 后续
+
+一直 trace 下去，发现是在读取存储于 Azure Blob 上的数据比较慢，达到几十毫秒。后与微软技术支持沟通，确认读取 blob 的时间在 40ms-100ms 是合理的，可以考虑通过提高并发来解决问题。目前已通过多线程读取 HBase 的方式解决问题。

@@ -21,7 +21,7 @@ kibana 要安装 x-pack 才能展示 es 监控数据，elasticsearch 也要安�
 #### 配置
 - Kibana 的 x-pack 配置，在 /etc/kibana/kibana.yml 添加如下配置：
 
-        xpack.security.enabled: false`
+        xpack.security.enabled: false
 此处因为要使用 basic x-pack，所以要将 x-pack 的安全功能关闭掉，basic 版没有
 
 - Elasticsearch 的 x-pack 配置，在 /etc/elasticsearch/elasticsearch.yml 添加如下配置：
@@ -31,9 +31,10 @@ kibana 要安装 x-pack 才能展示 es 监控数据，elasticsearch 也要安�
         xpack.security.enabled: false
 
 重启 Kibana，ES。
+浏览器中输入 Kibana 所在节点 IP，使用端口号 5601，即可进入 Kibana 界面。
 
 ### 关于 license
-使用 basic 版本的 x-pack，是要看 Elastic Stack 版本来决定是否需要注册 license的，高于 6.3 不必注册，低于 6.3，则需要到 https://register.elastic.co/ 进行注册。注册会有 license 文件发送到注册邮箱中，将该文件下载到本地，然后按照 https://www.elastic.co/guide/en/x-pack/6.1/installing-license.html 中的更新 license 方式更新集群 license 为 basic。通过如下命令查看集群的 license 信息
+使用 basic 版本的 x-pack，是要看 Elastic Stack 版本来决定是否需要注册 license 的，高于 6.3 不必注册，低于 6.3，则需要到 https://register.elastic.co/ 进行注册。注册会有 license 文件发送到注册邮箱中，将该文件下载到本地，然后按照 https://www.elastic.co/guide/en/x-pack/6.1/installing-license.html 中的更新 license 方式更新集群 license 为 basic。通过如下命令查看集群的 license 信息
 
 ```
 curl -XGET "http://xxxx:9200/_xpack/license"
