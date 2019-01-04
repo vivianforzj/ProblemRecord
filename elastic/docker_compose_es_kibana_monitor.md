@@ -75,7 +75,7 @@ volumes:
     driver: local
 
 networks:
-  esnet-weixin:
+  esnet-for-test-es:
     driver: bridge
 ```
 
