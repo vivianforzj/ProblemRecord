@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="Product">use-apollo</Property>
+        <Property name="AppName">use-apollo</Property>
+        <Property name="AppVersion">1.0</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout
+                    pattern="[${Product}@${AppName}@${AppVersion}] %d{yyyy-MM-dd'T'HH:mm:ssZZ} %-5p [%t] %C{-1}.%M(%F:%L) - %m%n"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="/tmp/use-apollo.log"
+                     filePattern="/tmp/use-apollo/archive/use-apollo-%d{yyyy-MM-dd HH-mm-ss}-%i.log.gz">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--<PatternLayout pattern="[%p] %d{yyyy-MM-dd HH:mm:ss,SSS} %class{36}.%M line %L: %m%n"/>-->
+            <PatternLayout
+                    pattern="[${Product}@${AppName}@${AppVersion}@${sys:Source}}] %d{yyyy-MM-dd'T'HH:mm:ssZZ} %-5p [%t] %C{-1}.%M(%F:%L) - %m%n"/>
+            <SizeBasedTriggeringPolicy size="10MB"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+
+    </Loggers>
+</Configuration>
